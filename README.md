@@ -1,2 +1,2 @@
 # bugfreeexample
-a BugFreeExample (see http://http://www.bugfreedevelopment.net)
+a BugFreeExample (see http://www.bugfreedevelopment.net)
