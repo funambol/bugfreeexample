@@ -18,6 +18,7 @@
 package bugfree.example;
 
 import static org.assertj.core.api.BDDAssertions.then;
+import static org.assertj.core.api.Fail.fail;
 import org.junit.Test;
 
 /**
@@ -75,6 +76,8 @@ public class BugFreeSimplestFirst {
                 dao.setValidationKeyValidity(BLANK, true);
                 fail("missing argument validity check");
             }
+        } catch (IllegalArgumentException x) {
+            then(x).hasMessage("username can not be null");
         }
     }
 }
