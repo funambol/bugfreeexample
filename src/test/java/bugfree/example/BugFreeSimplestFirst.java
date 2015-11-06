@@ -65,4 +65,11 @@ public class BugFreeSimplestFirst {
             then(dao.isValidationKeyValid(username)).isFalse();
         }
     }
+    
+    @Test
+    public void setValidationKeyValidity_invalid_arguments() {
+        try {
+            
+        }
+    }
 }
