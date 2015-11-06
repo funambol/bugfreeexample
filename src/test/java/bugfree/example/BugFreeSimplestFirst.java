@@ -34,24 +34,14 @@ public class BugFreeSimplestFirst {
         ActivationKeyDAO dao = new ActivationKeyDAO();
                 
         //
-        // set validation key for user 1
+        // set validation key for a user
         //
-        for (boolean value: new boolean[] {true, false, false, true}) {
-            dao.setValidationKeyValidity("user1", value);
-            then(dao.isValidationKeyValid("user1")).isEqualTo(value);
+        for (String username: new String[] {"user-one", "user-two", "user-three"}) {
+            for (boolean value: new boolean[] {true, false, false, true}) {
+                dao.setValidationKeyValidity("user1", value);
+                then(dao.isValidationKeyValid("user1")).isEqualTo(value);
+            }
         }
-        
-        //
-        // so far the implementation must be enough to satisfy the first simple
-        // requirement above; if can return always true. What about another
-        // user?
-        //
-        
-        //
-        // set validation key for user 2
-        //
-        dao.setValidationKeyValidity("user2", true);
-        then(dao.isValidationKeyValid("user2")).isTrue();
     }
     
     @Test
