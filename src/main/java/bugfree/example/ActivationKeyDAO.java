@@ -29,6 +29,12 @@ public class ActivationKeyDAO {
     
     Map<String, Boolean> keys = new HashMap<>();
     
+    /**
+     * Sets the validation key for the given user to the given value.
+     * 
+     * @param username the user - NOT EMPTY
+     * @param validity 
+     */
     public void setValidationKeyValidity(final String username, boolean validity) {
         if (StringUtils.isBlank(username)) {
             throw new IllegalArgumentException("username can not be blank");
