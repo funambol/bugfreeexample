@@ -77,7 +77,7 @@ public class BugFreeSimplestFirst {
                 fail("missing argument validity check");
             }
         } catch (IllegalArgumentException x) {
-            then(x).hasMessage("username can not be null");
+            then(x).hasMessage("username can not be blank");
         }
     }
 }
