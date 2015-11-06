@@ -80,4 +80,18 @@ public class BugFreeSimplestFirst {
             then(x).hasMessage("username can not be blank");
         }
     }
+    
+    @Test
+    public void isValidationKeyValid_invalid_arguments() {
+        ActivationKeyDAO dao = new ActivationKeyDAO();
+        
+        try {
+            for (String BLANK: new String[] {null, "", "   ", "\t "}) {
+                dao.isValidationKeyValid(BLANK);
+                fail("missing argument validity check");
+            }
+        } catch (IllegalArgumentException x) {
+            then(x).hasMessage("username can not be blank");
+        }
+    }
 }
