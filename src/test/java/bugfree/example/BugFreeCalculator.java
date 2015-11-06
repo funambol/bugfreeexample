@@ -2,7 +2,6 @@ package bugfree.example;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.assertj.core.api.Fail.fail;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class BugFreeCalculator {
