@@ -29,7 +29,7 @@ public class ActivationKeyDAO {
     Map<String, Boolean> keys = new HashMap<>();
     
     public void setValidationKeyValidity(final String username, boolean validity) {
-        
+        keys.put(username, validity);
     }
     
     public boolean isValidationKeyValid(final String username) {
