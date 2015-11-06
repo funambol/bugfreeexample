@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class ActivationKeyDAO {
     
-    Map<String, boolean> keys = new HashMap<>();
+    Map<String, Boolean> keys = new HashMap<>();
     
     public void setValidationKeyValidity(final String username, boolean validity) {
         
