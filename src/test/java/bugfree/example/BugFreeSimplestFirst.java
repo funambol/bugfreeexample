@@ -45,6 +45,18 @@ public class BugFreeSimplestFirst {
     }
     
     @Test
+    public void validation_key_is_invalid_if_the_user_does_not_exist() {
+        ActivationKeyDAO dao = new ActivationKeyDAO();
+        
+        //
+        // no validations so far...
+        //
+        for (String username: new String[] {"user-one", "user-two", "user-three"}) {
+            then(dao.isValidationKeyValid(username)).isFalse());
+                    
+    }
+    
+    @Test
     public void isValidationKeyValid_returns_true_if_validation_key_is_valid() {
         
     }
