@@ -34,6 +34,8 @@ public class ActivationKeyDAO {
      * 
      * @param username the user - NOT EMPTY
      * @param validity 
+     * 
+     * @throws IllegalArgumentException if any argument is not valid
      */
     public void setValidationKeyValidity(final String username, boolean validity) {
         if (StringUtils.isBlank(username)) {
