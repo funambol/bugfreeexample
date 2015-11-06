@@ -68,8 +68,12 @@ public class BugFreeSimplestFirst {
     
     @Test
     public void setValidationKeyValidity_invalid_arguments() {
+        ActivationKeyDAO dao = new ActivationKeyDAO();
+        
         try {
-            
+            for (String BLANK: new String[] {null, "", "   ", "\t "}) {
+                then(dao.isValidationKeyValid(username)).isFalse();
+        }
         }
     }
 }
