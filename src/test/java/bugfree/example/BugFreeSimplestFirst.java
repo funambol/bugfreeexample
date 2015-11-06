@@ -46,10 +46,10 @@ public class BugFreeSimplestFirst {
         //
         
         //
-        // set validation key for user 1
+        // set validation key for user 2
         //
-        dao.setValidationKeyValidity("user1", true);
-        then(dao.isValidationKeyValid("user1")).isTrue();
+        dao.setValidationKeyValidity("user2", true);
+        then(dao.isValidationKeyValid("user2")).isTrue();
     }
     
     @Test
