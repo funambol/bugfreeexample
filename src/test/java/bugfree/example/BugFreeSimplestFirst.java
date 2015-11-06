@@ -38,8 +38,8 @@ public class BugFreeSimplestFirst {
         //
         for (String username: new String[] {"user-one", "user-two", "user-three"}) {
             for (boolean value: new boolean[] {true, false, false, true}) {
-                dao.setValidationKeyValidity("user1", value);
-                then(dao.isValidationKeyValid("user1")).isEqualTo(value);
+                dao.setValidationKeyValidity(username, value);
+                then(dao.isValidationKeyValid(username)).isEqualTo(value);
             }
         }
     }
