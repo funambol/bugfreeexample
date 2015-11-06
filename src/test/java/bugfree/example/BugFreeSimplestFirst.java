@@ -17,6 +17,7 @@
  */
 package bugfree.example;
 
+import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.Test;
 
 /**
@@ -36,8 +37,7 @@ public class BugFreeSimplestFirst {
         // set validation key for user 1
         //
         dao.setValidationKeyValidity("user1", true);
-        then(dao.isValidationKeyValid()).isTrue();
-        
+        then(dao.isValidationKeyValid("user1")).isTrue();
     }
     
     @Test

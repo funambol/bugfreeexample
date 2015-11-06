@@ -26,4 +26,8 @@ public class ActivationKeyDAO {
     public void setValidationKeyValidity(final String username, boolean validity) {
         
     }
+    
+    public boolean isValidationKeyValid(final String username) {
+        return true;
+    }
 }
