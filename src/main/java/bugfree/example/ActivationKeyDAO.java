@@ -33,6 +33,6 @@ public class ActivationKeyDAO {
     }
     
     public boolean isValidationKeyValid(final String username) {
-        return true;
+        return keys.get(username);
     }
 }
