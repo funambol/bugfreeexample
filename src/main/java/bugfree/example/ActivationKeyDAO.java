@@ -23,6 +23,8 @@ package bugfree.example;
  */
 public class ActivationKeyDAO {
     
+    Map<String, boolean> keys = new HashMap<>();
+    
     public void setValidationKeyValidity(final String username, boolean validity) {
         
     }
