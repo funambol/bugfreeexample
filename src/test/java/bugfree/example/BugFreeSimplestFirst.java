@@ -53,6 +53,7 @@ public class BugFreeSimplestFirst {
         //
         for (String username: new String[] {"user-one", "user-two", "user-three"}) {
             then(dao.isValidationKeyValid(username)).isFalse());
+        }
                     
     }
     
