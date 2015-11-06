@@ -36,6 +36,7 @@ public class BugFreeSimplestFirst {
         // set validation key for user 1
         //
         dao.setValidationKeyValidity("user1", true);
+        then(dao.isValidationKeyValid()).isTrue();
         
     }
     
