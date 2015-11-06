@@ -38,6 +38,18 @@ public class BugFreeSimplestFirst {
         //
         dao.setValidationKeyValidity("user1", true);
         then(dao.isValidationKeyValid("user1")).isTrue();
+        
+        //
+        // so far the implementation must be enough to satisfy the first simple
+        // requirement above; if can return always true. What about another
+        // user?
+        //
+        
+        //
+        // set validation key for user 1
+        //
+        dao.setValidationKeyValidity("user1", true);
+        then(dao.isValidationKeyValid("user1")).isTrue();
     }
     
     @Test
