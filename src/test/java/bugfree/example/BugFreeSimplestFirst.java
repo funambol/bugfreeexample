@@ -39,7 +39,7 @@ public class BugFreeSimplestFirst {
         for (boolean value: new boolean[true, false, false, true]) {
             dao.setValidationKeyValidity("user1", value);
             then(dao.isValidationKeyValid("user1")).isEqualTo(value);
-    }
+        }
         
         //
         // so far the implementation must be enough to satisfy the first simple
