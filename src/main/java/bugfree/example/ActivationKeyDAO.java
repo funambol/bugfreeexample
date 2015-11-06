@@ -19,6 +19,7 @@ package bugfree.example;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -29,6 +30,9 @@ public class ActivationKeyDAO {
     Map<String, Boolean> keys = new HashMap<>();
     
     public void setValidationKeyValidity(final String username, boolean validity) {
+        if (StringUtils.isBlank(username)) {
+            throw new IllegalArgumentException("username can not be blank");
+        }
         keys.put(username, validity);
     }
     
