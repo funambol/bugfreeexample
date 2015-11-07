@@ -45,7 +45,7 @@ public class ActivationKeyDAO {
     }
     
     public boolean isValidationKeyValid(final String username) {
-        
+        usernameSanityCheck(username);
         if (!keys.containsKey(username)) {
             return false;
         }
