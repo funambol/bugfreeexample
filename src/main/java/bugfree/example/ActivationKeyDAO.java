@@ -53,7 +53,7 @@ public class ActivationKeyDAO {
         return keys.get(username);
     }
     
-    private usernameSanityCheck(final String username) {
+    private void usernameSanityCheck(final String username) {
         if (StringUtils.isBlank(username)) {
             throw new IllegalArgumentException("username can not be blank");
         }
