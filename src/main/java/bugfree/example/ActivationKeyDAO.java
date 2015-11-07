@@ -38,9 +38,7 @@ public class ActivationKeyDAO {
      * @throws IllegalArgumentException if any argument is not valid
      */
     public void setValidationKeyValidity(final String username, boolean validity) {
-        if (StringUtils.isBlank(username)) {
-            throw new IllegalArgumentException("username can not be blank");
-        }
+        usernameSanityCheck(username);
         keys.put(username, validity);
     }
     
