@@ -45,6 +45,9 @@ public class ActivationKeyDAO {
     }
     
     public boolean isValidationKeyValid(final String username) {
+        if (StringUtils.isBlank(username)) {
+            throw new IllegalArgumentException("username can not be blank");
+        }
         if (!keys.containsKey(username)) {
             return false;
         }
