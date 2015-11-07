@@ -87,7 +87,7 @@ public class BugFreeSimplestFirst {
         
         try {
             for (String BLANK: new String[] {null, "", "   ", "\t "}) {
-                dao.isValidationKeyValid(BLANK);
+                dao.setValidationKeyValidity(BLANK, true);
                 fail("missing argument validity check");
             }
         } catch (IllegalArgumentException x) {
