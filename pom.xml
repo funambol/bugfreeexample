@@ -24,6 +24,12 @@
             <version>3.4</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>ste.test</groupId>
+            <artifactId>xtest</artifactId>
+            <version>1.12.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
