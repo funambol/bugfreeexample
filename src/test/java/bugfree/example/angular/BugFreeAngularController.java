@@ -19,8 +19,10 @@ package bugfree.example.angular;
 
 import java.io.IOException;
 import javax.script.ScriptException;
+import static org.assertj.core.api.BDDAssertions.then;
 import org.junit.Test;
 import org.mozilla.javascript.NativeArray;
+import org.mozilla.javascript.NativeObject;
 import ste.xtest.js.BugFreeEnvjs;
 import ste.xtest.js.JSAssertions;
 
@@ -42,7 +44,11 @@ public class BugFreeAngularController extends BugFreeEnvjs {
             "controller('PhoneListCtrl', {$scope: scope});"
         );
         
-        JSAssertions.then((NativeArray)exec("scope.phones;")).isEmpty();
+        JSAssertions.then((NativeArray)exec("scope.phones;")).hasSize(3);
+        NativeObject phone = (NativeObject)exec("scope.phones[0];");
+        then(phone.get("name", null)).isEqualTo("Nexus S");
+        then(phone.get("snippet", null)).isEqualTo("Fast just got faster with Nexus S.");
+        
     }
     
 }
