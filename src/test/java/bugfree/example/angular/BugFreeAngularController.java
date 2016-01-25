@@ -48,7 +48,9 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         NativeObject phone = (NativeObject)exec("scope.phones[0];");
         then(phone.get("name", null)).isEqualTo("Nexus S");
         then(phone.get("snippet", null)).isEqualTo("Fast just got faster with Nexus S.");
-        
+        phone = (NativeObject)exec("scope.phones[2];");
+        then(phone.get("name", null)).isEqualTo("MOTOROLA XOOM™");
+        then(phone.get("snippet", null)).isEqualTo("The Next, Next Generation tablet.");
     }
     
 }
