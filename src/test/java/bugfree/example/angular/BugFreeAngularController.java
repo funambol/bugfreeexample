@@ -42,18 +42,24 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     }
     
     @Test
-    public void load_controller_and_data() throws Exception {
+    public void load_controller_and_data_from_url() throws Exception {
         givenURLStubs("phones1.json");
  
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
         JSAssertions.then((NativeArray)exec("scope.phones;")).hasSize(3);
-        NativeObject phone = (NativeObject)exec("scope.phones[0];");
-        then(phone.get("name", null)).isEqualTo("Nexus S");
-        then(phone.get("snippet", null)).isEqualTo("Fast just got faster with Nexus S.");
-        phone = (NativeObject)exec("scope.phones[2];");
-        then(phone.get("name", null)).isEqualTo("MOTOROLA XOOM™");
-        then(phone.get("snippet", null)).isEqualTo("The Next, Next Generation tablet.");
+        thenPhoneIs(0, "Nexus S", "Fast just got faster with Nexus S.");
+        thenPhoneIs(2, "MOTOROLA XOOM™", "The Next, Next Generation tablet.");
+    }
+    
+    @Test
+    public void content_is_dynamic() throws Exception {
+        givenURLStubs("phones2.json");
+ 
+        exec("controller('PhoneListCtrl', {$scope: scope});");
+        
+        JSAssertions.then((NativeArray)exec("scope.phones;")).hasSize(1);
+        thenPhoneIs(0, "Huawei", "Best price/quality ratio");
     }
     
     // --------------------------------------------------------- private methods
@@ -65,6 +71,13 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         System.out.println(">> " + "file://" + new File("phones/phones.json").getAbsolutePath());
         
         builders[0].file("src/test/angular/" + file).type("application/json");
+    }
+    
+    private void thenPhoneIs(int index, final String phone, final String snippet)
+    throws Exception {
+        NativeObject p = (NativeObject)exec("scope.phones[" + index + "];");
+        then(p.get("name", null)).isEqualTo(phone);
+        then(p.get("snippet", null)).isEqualTo(snippet);
     }
     
 }
