@@ -70,7 +70,7 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         //
         givenURLStubsWithError(404); // not found
         
-        exec("Envjs.DEBUG = true; controller('PhoneListCtrl', {$scope: scope});");
+        exec("controller('PhoneListCtrl', {$scope: scope});");
         
         JSAssertions.then((NativeArray)exec("scope.phones;")).isEmpty();
         then(exec("scope.status;")).isEqualTo("error");
@@ -95,13 +95,33 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         then(exec("scope.status;")).isEqualTo("error");
     }
     
+    /**
+     * The url to retrieve the phone list shall be relative to current document
+     * location.
+     * 
+     * @throws Exception 
+     */
+    @Test
+    public void dynamic_data_retrieving_url() throws Exception {
+        givenURLStubs("phones1.json");
+ 
+        exec("document.location='http://server.com/angular/index.html';");
+        exec("controller('PhoneListCtrl', {$scope: scope});");
+        
+        thenPhoneIs(0, "Nexus S", "Fast just got faster with Nexus S.");
+    }
+    
     // --------------------------------------------------------- private methods
     
     private void givenURLStubs(final String file) throws Exception {
         StubURLBuilder[] builders = prepareUrlStupBuilders(
-            "file://" + new File("phones/phones.json").getAbsolutePath()
+            "file://" + new File("phones/phones.json").getAbsolutePath(),
+            "http://server.com/angular/index.html",
+            "http://server.com/angular/phones/phones.json"
         );
         builders[0].file("src/test/angular/" + file).type("application/json");
+        builders[1].file("src/main/webapp/angular/index.html").type("text/html");
+        builders[2].file("src/test/angular/" + file).type("application/json");
     }
     
     private void givenURLStubsWithError(int status) throws Exception {
