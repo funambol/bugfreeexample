@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.script.ScriptException;
 import static org.assertj.core.api.BDDAssertions.then;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeObject;
@@ -109,6 +108,28 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
         thenPhoneIs(0, "Nexus S", "Fast just got faster with Nexus S.");
+    }
+    
+    @Test
+    public void list_of_phones1() throws Exception {
+        givenURLStubs("phones1.json");
+ 
+        exec("document.location='http://server.com/angular/index.html';");
+        exec("controller('PhoneListCtrl', {$scope: scope});");
+        
+        then(exec("$('ul li:first span').text()")).isEqualTo("Nexus S");
+        then(exec("$('ul li:first p').text()")).isEqualTo("Fast just got faster with Nexus S.");
+    }
+    
+    @Test
+    public void list_of_phones2() throws Exception {
+        givenURLStubs("phones2.json");
+ 
+        exec("document.location='http://server.com/angular/index.html';");
+        exec("controller('PhoneListCtrl', {$scope: scope});");
+
+        then(exec("$('ul li:first span').text()")).isEqualTo("Huawei");
+        then(exec("$('ul li:first p').text()")).isEqualTo("Best price/quality ratio");
     }
     
     // --------------------------------------------------------- private methods
