@@ -37,13 +37,22 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         loadScript("/js/ecma5-adapter.js");
         loadScript("/js/angular-rhino.js");
         loadScript("/js/envjs.urlstubber.js");
-        loadScript("src/main/webapp/angular/js/controllers.js");
+        loadScript("src/main/webapp/phones/controllers.js");
         loadScript("src/test/angular/fake.js");
     }
     
     @Test
-    public void load_controller_and_data_from_url() throws Exception {
+    public void load_index() throws Exception {
         givenURLStubs("phones1.json");
+        
+        exec("document.location='http://localhost:8080/phones/index.html';");
+        
+        then(exec("document.title;")).isEqualTo("Phone list");
+    }
+    
+    @Test
+    public void load_controller_and_data_from_url() throws Exception {
+        givenFileURLStubs("phones1.json");
  
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
@@ -54,7 +63,7 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     
     @Test
     public void content_is_dynamic() throws Exception {
-        givenURLStubs("phones2.json");
+        givenFileURLStubs("phones2.json");
  
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
@@ -65,9 +74,9 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     @Test
     public void set_status_in_case_of_errors() throws Exception {
         //
-        // data error
+        // connection error
         //
-        givenURLStubsWithError(404); // not found
+        givenFileURLStubsWithError(404); // not found
         
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
@@ -77,7 +86,7 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         //
         // in case of success status becomes "ok"
         //
-        givenURLStubs("phones2.json"); 
+        givenFileURLStubs("phones2.json"); 
         
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
@@ -86,7 +95,7 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         //
         // server error
         //
-        givenURLStubsWithError(500); 
+        givenFileURLStubsWithError(500); 
         
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
@@ -102,9 +111,8 @@ public class BugFreeAngularController extends BugFreeEnvjs {
      */
     @Test
     public void dynamic_data_retrieving_url() throws Exception {
-        givenURLStubs("phones1.json");
+        givenFileURLStubs("phones1.json");
  
-        exec("document.location='http://server.com/angular/index.html';");
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
         thenPhoneIs(0, "Nexus S", "Fast just got faster with Nexus S.");
@@ -114,7 +122,7 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     public void list_of_phones1() throws Exception {
         givenURLStubs("phones1.json");
  
-        exec("document.location='http://server.com/angular/index.html';");
+        exec("document.location='http://localhost:8080/phones/index.html';");
         exec("controller('PhoneListCtrl', {$scope: scope});");
         
         then(exec("$('ul li:first span').text()")).isEqualTo("Nexus S");
@@ -123,9 +131,9 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     
     @Test
     public void list_of_phones2() throws Exception {
-        givenURLStubs("phones2.json");
+        givenURLStubs("server.com", "phones2.json");
  
-        exec("document.location='http://server.com/angular/index.html';");
+        exec("document.location='http://server.com/phones/index.html';");
         exec("controller('PhoneListCtrl', {$scope: scope});");
 
         then(exec("$('ul li:first span').text()")).isEqualTo("Huawei");
@@ -134,22 +142,33 @@ public class BugFreeAngularController extends BugFreeEnvjs {
     
     // --------------------------------------------------------- private methods
     
-    private void givenURLStubs(final String file) throws Exception {
+    private void givenURLStubs(final String server, final String file) throws Exception {
         StubURLBuilder[] builders = prepareUrlStupBuilders(
-            "file://" + new File("phones/phones.json").getAbsolutePath(),
-            "http://server.com/angular/index.html",
-            "http://server.com/angular/phones/phones.json"
+            "http://" + server +"/phones/index.html",
+            "http://" + server + "/phones/phones.json"
         );
-        builders[0].file("src/test/angular/" + file).type("application/json");
-        builders[1].file("src/main/webapp/angular/index.html").type("text/html");
-        builders[2].file("src/test/angular/" + file).type("application/json");
+        int i=0;
+        builders[i++].file("src/main/webapp/phones/index.html").type("text/html");
+        builders[i++].file("src/test/angular/" + file).type("application/json");
     }
     
-    private void givenURLStubsWithError(int status) throws Exception {
+    private void givenURLStubs(final String file) throws Exception {
+        givenURLStubs("localhost:8080", file);
+    }
+    
+    private void givenFileURLStubs(final String file) throws Exception {
         StubURLBuilder[] builders = prepareUrlStupBuilders(
-            "file://" + new File("phones/phones.json").getAbsolutePath()
+            "file://" + new File("phones.json").getAbsolutePath()
         );
-        builders[0].text("pippo").status(status);
+        
+        builders[0].file("src/test/angular/" + file).type("application/json");
+    }
+    
+    private void givenFileURLStubsWithError(int status) throws Exception {
+        StubURLBuilder[] builders = prepareUrlStupBuilders(
+            "file://" + new File("phones.json").getAbsolutePath()
+        );
+        builders[0].text("some text").status(status);
     }
     
     private void thenPhoneIs(int index, final String phone, final String snippet)

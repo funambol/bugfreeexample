@@ -27,7 +27,7 @@
         <dependency>
             <groupId>ste.test</groupId>
             <artifactId>xtest</artifactId>
-            <version>1.12.6</version>
+            <version>1.12.7-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
