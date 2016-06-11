@@ -31,8 +31,9 @@ public class BugFreeBuggyActivationKeyDAO {
 
     @Test
     public void setValidationKeyValidityToFalse() {
-        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO();
         String userid = "USER_PART1";
+        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO(new String[] {userid});
+        
         boolean result,
                 validity = false,
                 expResult = true;
@@ -44,8 +45,8 @@ public class BugFreeBuggyActivationKeyDAO {
 
     @Test
     public void setValidationKeyValidityToTrue() {
-        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO();
         String userid = "USER_PART1";
+        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO(new String[] {userid});
         boolean result,
                 validity = true,
                 expResult = true;
@@ -57,8 +58,8 @@ public class BugFreeBuggyActivationKeyDAO {
 
     @Test
     public void setValidationKeyValidityFails() {
-        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO();
         String userid = "USER_PART3";
+        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO();
         boolean result,
                 validity,
                 expResult = false;

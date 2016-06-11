@@ -19,8 +19,10 @@ package bugfree.example.angular;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.script.ScriptException;
 import static org.assertj.core.api.BDDAssertions.then;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ProvideSystemProperty;
@@ -29,6 +31,7 @@ import org.mozilla.javascript.NativeObject;
 import ste.xtest.js.BugFreeEnvjs;
 import ste.xtest.js.JSAssertions;
 import ste.xtest.net.StubStreamHandler;
+import ste.xtest.net.StubStreamHandlerFactory;
 import ste.xtest.net.StubURLConnection;
 
 /**
@@ -41,9 +44,10 @@ public class BugFreeAngularController extends BugFreeEnvjs {
         loadScript("src/test/angular/fake.js");
     }
     
-    @Rule
-    public final ProvideSystemProperty PACKAGE_HANDLERS
-	 = new ProvideSystemProperty("java.protocol.handler.pkgs", "ste.xtest.net");
+    @BeforeClass
+    public static void before_class() throws Exception {
+        URL.setURLStreamHandlerFactory(new StubStreamHandlerFactory());
+    }
     
     @Test
     public void load_index() throws Exception {

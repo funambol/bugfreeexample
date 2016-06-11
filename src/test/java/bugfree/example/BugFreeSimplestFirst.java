@@ -18,7 +18,6 @@
 package bugfree.example;
 
 import static org.assertj.core.api.BDDAssertions.then;
-import static org.assertj.core.api.Fail.fail;
 import org.junit.Test;
 
 /**
@@ -30,14 +29,16 @@ import org.junit.Test;
  */
 public class BugFreeSimplestFirst {
     
+    private final String[] USERS = new String[] {"user-one", "user-two", "user-three"};
+    
     @Test
     public void setValidationKeyValid_sets_validation_key_by_user() {
-        ActivationKeyDAO dao = new ActivationKeyDAO();
+        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO(USERS);
                 
         //
         // set validation key for a user
         //
-        for (String username: new String[] {"user-one", "user-two", "user-three"}) {
+        for (String username: USERS) {
             for (boolean value: new boolean[] {true, false, false, true}) {
                 dao.setValidationKeyValidity(username, value);
                 then(dao.isValidationKeyValid(username)).isEqualTo(value);
@@ -47,12 +48,12 @@ public class BugFreeSimplestFirst {
     
     @Test
     public void validation_key_is_invalid_if_the_user_does_not_exist() {
-        ActivationKeyDAO dao = new ActivationKeyDAO();
+        BuggyActivationKeyDAO dao = new BuggyActivationKeyDAO(USERS);
         
         //
         // no validations so far...
         //
-        for (String username: new String[] {"user-one", "user-two", "user-three"}) {
+        for (String username: USERS) {
             then(dao.isValidationKeyValid(username)).isFalse();
         }
         
@@ -62,36 +63,8 @@ public class BugFreeSimplestFirst {
         dao.setValidationKeyValidity("anotheruser1", true);
         dao.setValidationKeyValidity("anotheruser2", false);
         
-        for (String username: new String[] {"user-one", "user-two", "user-three"}) {
+        for (String username: USERS) {
             then(dao.isValidationKeyValid(username)).isFalse();
-        }
-    }
-    
-    @Test
-    public void setValidationKeyValidity_invalid_arguments() {
-        ActivationKeyDAO dao = new ActivationKeyDAO();
-        
-        try {
-            for (String BLANK: new String[] {null, "", "   ", "\t "}) {
-                dao.setValidationKeyValidity(BLANK, true);
-                fail("missing argument validity check");
-            }
-        } catch (IllegalArgumentException x) {
-            then(x).hasMessage("username can not be blank");
-        }
-    }
-    
-    @Test
-    public void isValidationKeyValid_invalid_arguments() {
-        ActivationKeyDAO dao = new ActivationKeyDAO();
-        
-        try {
-            for (String BLANK: new String[] {null, "", "   ", "\t "}) {
-                dao.isValidationKeyValid(BLANK);
-                fail("missing argument validity check");
-            }
-        } catch (IllegalArgumentException x) {
-            then(x).hasMessage("username can not be blank");
         }
     }
 }
